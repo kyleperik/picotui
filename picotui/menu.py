@@ -2,18 +2,6 @@ from .screen import *
 from .basewidget import *
 
 
-class ItemSelWidget(Widget):
-
-    def __init__(self, items):
-        super().__init__()
-        self.items = items
-        self.selected = 0
-
-    def move_focus(self, direction):
-        self.selected = (self.selected + direction) % len(self.items)
-        self.redraw()
-
-
 class WMenuBar(ItemSelWidget):
 
     def __init__(self, menu_struct):
@@ -67,11 +55,11 @@ class WMenuBar(ItemSelWidget):
             elif key == KEY_LEFT:
                 if self.pulled_down:
                     self.screen_redraw()
-                self.move_focus(-1)
+                self.move_sel(-1)
             elif key == KEY_RIGHT:
                 if self.pulled_down:
                     self.screen_redraw()
-                self.move_focus(1)
+                self.move_sel(1)
             elif key == KEY_ENTER:
                 self.pulled_down = True
                 action = True
@@ -151,9 +139,9 @@ class WMenuBox(ItemSelWidget):
         if key == KEY_ESC:
             return ACTION_CANCEL
         elif key == KEY_UP:
-            self.move_focus(-1)
+            self.move_sel(-1)
         elif key == KEY_DOWN:
-            self.move_focus(1)
+            self.move_sel(1)
         elif key == KEY_LEFT:
             return ACTION_PREV
         elif key == KEY_RIGHT:
